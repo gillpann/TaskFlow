@@ -1,6 +1,6 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import TaskForm from "@/components/TaskForm";
 import TaskList from "@/components/TaskList";
@@ -12,6 +12,7 @@ import TaskNavigation from "@/components/TaskNavigation";
 import ConfirmDialog from "@/components/ConfirmDialog";
 
 export default function HomePage() {
+  const router = useRouter();
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [currentView, setCurrentView] = useState("home");
@@ -24,13 +25,20 @@ export default function HomePage() {
   });
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Load tasks from localStorage on initial render
   useEffect(() => {
+    // Check for authentication
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      router.push("/auth/login");
+      return;
+    }
+
+    // Load tasks if authenticated
     const savedTasks = localStorage.getItem("tasks");
     const savedTrashedTasks = localStorage.getItem("trashedTasks");
     if (savedTasks) setTasks(JSON.parse(savedTasks));
     if (savedTrashedTasks) setTrashedTasks(JSON.parse(savedTrashedTasks));
-  }, []);
+  }, [router]);
 
   // Save tasks to localStorage whenever they change
   useEffect(() => {
@@ -67,6 +75,13 @@ export default function HomePage() {
       setTasks(updatedTasks);
     }
   }, [tasks]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth_token");
+    document.cookie =
+      "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    router.push("/auth/login");
+  };
 
   const addTask = (task) => {
     setTasks([task, ...tasks]);
@@ -121,6 +136,18 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
+      <header className="bg-white shadow">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-xl font-bold">Welcome</h1>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900"
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
           {/* Left Section */}
@@ -157,13 +184,17 @@ export default function HomePage() {
                 <TaskList
                   tasks={filteredTasks}
                   onToggleComplete={toggleComplete}
-                  onDelete={currentView === "home" ? deleteTask : permanentlyDeleteTask}
+                  onDelete={
+                    currentView === "home" ? deleteTask : permanentlyDeleteTask
+                  }
                   onUpdate={updateTask}
                   onRestore={restoreTask}
                   isTrash={currentView === "trash"}
                   emptyMessage={
                     searchQuery
-                      ? `No tasks found${currentView === "trash" ? " in trash" : ""}`
+                      ? `No tasks found${
+                          currentView === "trash" ? " in trash" : ""
+                        }`
                       : currentView === "trash"
                       ? "Trash is empty"
                       : "Your tasks will show up here."
