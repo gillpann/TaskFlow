@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
+import useTask from "@/hooks/useTask";
 import TaskForm from "@/components/TaskForm";
 import TaskList from "@/components/TaskList";
 import Footer from "@/components/Footer";
@@ -13,68 +14,28 @@ import ConfirmDialog from "@/components/ConfirmDialog";
 
 export default function HomePage() {
   const router = useRouter();
-  const [tasks, setTasks] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [currentView, setCurrentView] = useState("home");
-  const [trashedTasks, setTrashedTasks] = useState([]);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [taskStats, setTaskStats] = useState({
-    total: 0,
-    completed: 0,
-    pending: 0,
-  });
-  const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    // Check for authentication
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      router.push("/auth/login");
-      return;
-    }
-
-    // Load tasks if authenticated
-    const savedTasks = localStorage.getItem("tasks");
-    const savedTrashedTasks = localStorage.getItem("trashedTasks");
-    if (savedTasks) setTasks(JSON.parse(savedTasks));
-    if (savedTrashedTasks) setTrashedTasks(JSON.parse(savedTrashedTasks));
-  }, [router]);
-
-  // Save tasks to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    localStorage.setItem("trashedTasks", JSON.stringify(trashedTasks));
-  }, [tasks, trashedTasks]);
-
-  // Update task statistics
-  useEffect(() => {
-    setTaskStats({
-      total: tasks.length,
-      completed: tasks.filter((task) => task.completed).length,
-      pending: tasks.filter((task) => !task.completed).length,
-    });
-  }, [tasks]);
-
-  // Check for expired tasks
-  useEffect(() => {
-    const now = new Date();
-    const updatedTasks = tasks.filter((task) => {
-      if (task.type === "text" && task.dueDate) {
-        const dueDate = new Date(task.dueDate);
-        if (dueDate < now && !task.completed) {
-          setTrashedTasks((prev) => [
-            ...prev,
-            { ...task, expiredAt: now.toISOString() },
-          ]);
-          return false;
-        }
-      }
-      return true;
-    });
-    if (updatedTasks.length !== tasks.length) {
-      setTasks(updatedTasks);
-    }
-  }, [tasks]);
+  
+  const {
+    tasks,
+    trashedTasks,
+    showForm,
+    setShowForm,
+    currentView,
+    setCurrentView,
+    showConfirmDialog,
+    setShowConfirmDialog,
+    taskStats,
+    searchQuery,
+    setSearchQuery,
+    addTask,
+    toggleComplete,
+    deleteTask,
+    updateTask,
+    restoreTask,
+    permanentlyDeleteTask,
+    emptyTrash,
+    filteredTasks,
+  } = useTask(router);
 
   const handleLogout = () => {
     localStorage.removeItem("auth_token");
@@ -83,62 +44,11 @@ export default function HomePage() {
     router.push("/auth/login");
   };
 
-  const addTask = (task) => {
-    setTasks([task, ...tasks]);
-    setShowForm(false);
-  };
-
-  const toggleComplete = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
-  const deleteTask = (taskId) => {
-    const taskToDelete = tasks.find((task) => task.id === taskId);
-    setTrashedTasks([
-      { ...taskToDelete, deletedAt: new Date().toISOString() },
-      ...trashedTasks,
-    ]);
-    setTasks(tasks.filter((task) => task.id !== taskId));
-  };
-
-  const updateTask = (taskId, updatedTask) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, ...updatedTask } : task
-      )
-    );
-  };
-
-  const restoreTask = (taskId) => {
-    const taskToRestore = trashedTasks.find((task) => task.id === taskId);
-    setTasks([taskToRestore, ...tasks]);
-    setTrashedTasks(trashedTasks.filter((task) => task.id !== taskId));
-  };
-
-  const permanentlyDeleteTask = (taskId) => {
-    setTrashedTasks(trashedTasks.filter((task) => task.id !== taskId));
-  };
-
-  const emptyTrash = () => {
-    setTrashedTasks([]);
-    setShowConfirmDialog(false);
-  };
-
-  const filteredTasks = (currentView === "home" ? tasks : trashedTasks).filter(
-    (task) =>
-      task.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <header className="bg-white shadow">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">Welcome</h1>
+          <h1 className="text-xl font-bold">Welcome Gilvan</h1>
           <button
             onClick={handleLogout}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900"

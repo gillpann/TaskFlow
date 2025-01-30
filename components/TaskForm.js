@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
 
 export default function TaskForm({ onSubmit, onClose, initialData }) {
   const [taskType, setTaskType] = useState(initialData?.type || "text");
@@ -20,7 +19,7 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
       id: initialData?.id || Date.now().toString(),
       type: taskType,
       text: text.trim(),
-      description: description.trim(),
+      description: taskType === "text" ? description.trim() : "",
       dueDate: taskType === "text" ? dueDate : null,
       completed: initialData?.completed || false,
       createdAt: initialData?.createdAt || new Date().toISOString(),
@@ -40,6 +39,12 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
         <h2 className="text-xl font-semibold text-gray-800">
           {initialData ? "Edit Task" : "Create New Task"}
         </h2>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          ></button>
+        )}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -86,32 +91,34 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
           )}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Description
-          </label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter task description"
-            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            rows="3"
-          />
-        </div>
-
         {taskType === "text" && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Due Date
-            </label>
-            <input
-              type="datetime-local"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
+          <>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter task description"
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                rows="3"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Due Date
+              </label>
+              <input
+                type="datetime-local"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+          </>
         )}
 
         <button
