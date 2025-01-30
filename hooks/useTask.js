@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function useTasks(router) {
+    const [theme, setTheme] = useState("light");
     const [tasks, setTasks] = useState([]);
     const [trashedTasks, setTrashedTasks] = useState([]);
     const [showForm, setShowForm] = useState(false);
@@ -12,6 +13,29 @@ export default function useTasks(router) {
         pending: 0,
     });
     const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");

@@ -34,15 +34,15 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
   };
 
   return (
-    <div className="bg-white rounded-lg p-6">
+    <div className="bg-background rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">
+        <h2 className="text-xl font-semibold text-foreground">
           {initialData ? "Edit Task" : "Create New Task"}
         </h2>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-muted-foreground hover:text-foreground"
           ></button>
         )}
       </div>
@@ -56,7 +56,7 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
               value="checklist"
               checked={taskType === "checklist"}
               onChange={(e) => setTaskType(e.target.value)}
-              className="text-blue-600"
+              className="text-primary"
             />
             Checklist
           </label>
@@ -67,14 +67,14 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
               value="text"
               checked={taskType === "text"}
               onChange={(e) => setTaskType(e.target.value)}
-              className="text-blue-600"
+              className="text-primary"
             />
             Text
           </label>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-muted-foreground mb-1">
             Title
           </label>
           <input
@@ -82,10 +82,10 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Enter task title"
-            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-card text-foreground"
           />
           {text.split(" ").length > 100 && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-destructive text-sm mt-1">
               Task exceeds 100 words limit
             </p>
           )}
@@ -94,27 +94,27 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
         {taskType === "text" && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Description
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Enter task description"
-                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-card text-foreground"
                 rows="3"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Due Date
               </label>
               <input
                 type="datetime-local"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-card text-foreground"
                 required
               />
             </div>
@@ -123,7 +123,7 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
         >
           {initialData ? "Update Task" : "Create Task"}
         </button>
