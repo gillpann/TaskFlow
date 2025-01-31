@@ -9,6 +9,9 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
     initialData?.description || ""
   );
   const [dueDate, setDueDate] = useState(initialData?.dueDate || "");
+  const [category, setCategory] = useState(initialData?.category || "Work");
+  const categories = ["Work", "Personal", "Errands", "Shopping", "Other"];
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
       dueDate: taskType === "text" ? dueDate : null,
       completed: initialData?.completed || false,
       createdAt: initialData?.createdAt || new Date().toISOString(),
+      category: category,
     };
 
     onSubmit(task);
@@ -117,6 +121,23 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-card text-foreground"
                 required
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
+                Category
+              </label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-card text-foreground"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
             </div>
           </>
         )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Clock, Pencil, Trash2, RotateCcw } from "lucide-react";
+import { Check, Clock, Pencil, Trash2, RotateCcw, Tag } from "lucide-react";
 import TaskForm from "./TaskForm";
 
 export default function TaskList({
@@ -143,6 +143,10 @@ export default function TaskList({
                     <span>Due: {formatDate(task.dueDate)}</span>
                   </div>
                 )}
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Tag size={14} />
+                    <span>{task.category}</span>
+                </div>
               </div>
             )}
 
@@ -153,6 +157,7 @@ export default function TaskList({
                   : `Deleted at: ${formatDate(task.deletedAt)}`}
               </div>
             )}
+
           </div>
         </div>
       ))}
