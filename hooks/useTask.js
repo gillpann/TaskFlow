@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useTasks(router) {
+export default function useTask(router) {
     const [theme, setTheme] = useState("light");
     const [tasks, setTasks] = useState([]);
     const [trashedTasks, setTrashedTasks] = useState([]);
@@ -35,6 +35,13 @@ export default function useTasks(router) {
     } else {
       document.documentElement.classList.remove("dark");
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth_token");
+    document.cookie =
+      "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    router.push("/auth/login");
   };
 
   useEffect(() => {
@@ -148,6 +155,7 @@ export default function useTasks(router) {
     taskStats,
     searchQuery,
     setSearchQuery,
+    handleLogout,
     addTask,
     toggleComplete,
     deleteTask,

@@ -30,6 +30,7 @@ export default function HomePage() {
     taskStats,
     searchQuery,
     setSearchQuery,
+    handleLogout,
     addTask,
     toggleComplete,
     deleteTask,
@@ -39,13 +40,6 @@ export default function HomePage() {
     emptyTrash,
     filteredTasks,
   } = useTask(router);
-
-  const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    document.cookie =
-      "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
-    router.push("/auth/login");
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
