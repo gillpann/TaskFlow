@@ -27,8 +27,8 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/USERNAME/task-manager.git
-    cd task-manager
+    git clone https://github.com/USERNAME/TaskFlow.git
+    cd TaskFlow
 
 2. **Install dependencies**:
     ```bash
