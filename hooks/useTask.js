@@ -1,6 +1,10 @@
+"use client"
+
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/useToast";
 
 export default function useTask(router) {
+    const { toast } = useToast();
     const [theme, setTheme] = useState("light");
     const [tasks, setTasks] = useState([]);
     const [trashedTasks, setTrashedTasks] = useState([]);
@@ -93,6 +97,11 @@ export default function useTask(router) {
   const addTask = (task) => {
     setTasks([task, ...tasks]);
     setShowForm(false);
+    toast({
+      title: "Success",
+      description: "Task created successfully",
+      variant: "success",
+    });
   };
 
   const toggleComplete = (taskId) => {
@@ -101,6 +110,11 @@ export default function useTask(router) {
         task.id === taskId ? { ...task, completed: !task.completed } : task
       )
     );
+    toast({
+      title: "Success",
+      description: "Task status updated",
+      variant: "success",
+    });
   };
 
   const deleteTask = (taskId) => {
@@ -110,6 +124,11 @@ export default function useTask(router) {
       ...trashedTasks,
     ]);
     setTasks(tasks.filter((task) => task.id !== taskId));
+    toast({
+      title: "Success",
+      description: "Task moved to trash",
+      variant: "success",
+    });
   };
 
   const updateTask = (taskId, updatedTask) => {
@@ -118,21 +137,41 @@ export default function useTask(router) {
         task.id === taskId ? { ...task, ...updatedTask } : task
       )
     );
+    toast({
+      title: "Success",
+      description: "Task updated successfully",
+      variant: "success",
+    });
   };
 
   const restoreTask = (taskId) => {
     const taskToRestore = trashedTasks.find((task) => task.id === taskId);
     setTasks([taskToRestore, ...tasks]);
     setTrashedTasks(trashedTasks.filter((task) => task.id !== taskId));
+    toast({
+      title: "Success",
+      description: "Task restored successfully",
+      variant: "success",
+    });
   };
 
   const permanentlyDeleteTask = (taskId) => {
     setTrashedTasks(trashedTasks.filter((task) => task.id !== taskId));
+    toast({
+      title: "Success",
+      description: "Task permanently deleted",
+      variant: "success",
+    });
   };
 
   const emptyTrash = () => {
     setTrashedTasks([]);
     setShowConfirmDialog(false);
+    toast({
+      title: "Success",
+      description: "Trash emptied successfully",
+      variant: "success",
+    });
   };
 
   const filteredTasks = (currentView === "home" ? tasks : trashedTasks).filter(
