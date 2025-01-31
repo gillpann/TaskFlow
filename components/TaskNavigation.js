@@ -17,8 +17,8 @@ export default function TaskNavigation({
           onClick={() => setCurrentView("home")}
           className={`flex items-center justify-center gap-2 p-2 sm:px-4 sm:py-2 rounded-lg flex-1 sm:flex-initial transition-all ${
             currentView === "home"
-              ? "bg-background dark:bg-background text-primary"
-              : "text-foreground dark:text-foreground hover:text-primary dark:hover:text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+              ? "bg-background text-primary"
+              : "text-foreground hover:text-primary dark:hover:text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
           }`}
         >
         <Home size={20} className="transition-all hover:scale-110" />
@@ -28,8 +28,8 @@ export default function TaskNavigation({
           onClick={() => setCurrentView("trash")}
           className={`flex items-center justify-center gap-2 p-2 sm:px-4 sm:py-2 rounded-lg relative flex-1 sm:flex-initial transition-all ${
             currentView === "trash"
-              ? "bg-background dark:bg-background text-primary"
-              : "text-foreground dark:text-foreground hover:text-primary dark:hover:text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
+              ? "bg-background text-primary"
+              : "text-foreground hover:text-primary dark:hover:text-primary hover:bg-gray-200 dark:hover:bg-gray-700"
           }`}
         >
           <Trash2 size={20} className="transition-all hover:scale-110" />
@@ -62,7 +62,7 @@ export default function TaskNavigation({
           className="w-full pl-9 pr-4 py-2 border rounded-lg focus:ring-2 focus:border-border"
         />
         <Search
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground dark:text-foreground transition-all hover:scale-110"
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground transition-all hover:scale-110"
           size={16}
         />
       </div>

@@ -39,13 +39,16 @@ export default function HomePage() {
     permanentlyDeleteTask,
     emptyTrash,
     filteredTasks,
+    toggleTheme,
   } = useTask(router);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       <header className="bg-background dark:bg-background shadow">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-primary">Welcome Gilvan</h1>
+          <h1 className="text-lg sm:text-xl font-bold text-primary">
+            Welcome Gilvan
+          </h1>
           <div className="flex items-center gap-4">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -55,7 +58,7 @@ export default function HomePage() {
             </button>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-sm text-foreground hover:text-gray-900 dark:hover:text-white transition "
+              className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-secondary dark:hover:bg-muted transition-colors rounded-md"
             >
               Logout
             </button>
@@ -73,7 +76,7 @@ export default function HomePage() {
               <div className="mt-8">
                 <button
                   onClick={() => setShowForm(true)}
-                  className="w-full bg-primary dark:bg-primary text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors"
+                  className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
                 >
                   <Plus size={20} />
                   Create Task
@@ -84,7 +87,7 @@ export default function HomePage() {
 
           {/* Right Section */}
           <div className="md:col-span-2 flex flex-col">
-            <div className="bg-background dark:bg-background rounded-lg shadow-md p-6 flex-grow mb-8">
+            <div className="bg-background rounded-lg shadow-md p-6 flex-grow mb-8">
               <TaskNavigation
                 currentView={currentView}
                 setCurrentView={setCurrentView}

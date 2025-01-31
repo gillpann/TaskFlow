@@ -105,11 +105,19 @@ export default function useTask(router) {
   };
 
   const toggleComplete = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
+    setTasks((prevTasks) => {
+      const updatedTasks = prevTasks.map((task) =>
         task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
+      );
+
+      const sortedTasks = [
+        ...updatedTasks.filter((task) => !task.completed), 
+        ...updatedTasks.filter((task) => task.completed), 
+      ];
+
+      return sortedTasks;
+    });
+
     toast({
       title: "Success",
       description: "Task status updated",
@@ -203,5 +211,6 @@ export default function useTask(router) {
     permanentlyDeleteTask,
     emptyTrash,
     filteredTasks,
+    toggleTheme,
   };
 }

@@ -27,7 +27,7 @@ export default function TaskList({
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center text-foreground dark:text-foreground py-8">
+      <div className="text-center text-foreground py-8">
         {emptyMessage || "No assignment yet"}
       </div>
     );
