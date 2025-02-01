@@ -11,6 +11,8 @@ export default function useTask(router) {
     const [showForm, setShowForm] = useState(false);
     const [currentView, setCurrentView] = useState("home");
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [showTypeDialog, setShowTypeDialog] = useState(false);
+    const [selectedTaskType, setSelectedTaskType] = useState(null);
     const [taskStats, setTaskStats] = useState({
         total: 0,
         completed: 0,
@@ -154,6 +156,15 @@ export default function useTask(router) {
 
   const restoreTask = (taskId) => {
     const taskToRestore = trashedTasks.find((task) => task.id === taskId);
+
+    if (taskToRestore.expiredAt) {
+    toast({
+      title: "Cannot Restore",
+      description: "This task has expired and cannot be restored",
+      variant: "error",
+    });
+    return;
+  }
     setTasks([taskToRestore, ...tasks]);
     setTrashedTasks(trashedTasks.filter((task) => task.id !== taskId));
     toast({
@@ -188,6 +199,23 @@ export default function useTask(router) {
       task.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleTypeSelect = (type) => {
+    setSelectedTaskType(type);
+    setShowTypeDialog(false);
+    setShowForm(true);
+  };
+
+  const handleBackToTypeSelection = () => {
+    setShowForm(false);
+    setShowTypeDialog(true);
+    setSelectedTaskType(null);
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setSelectedTaskType(null);
+  };
+
   return {
     tasks,
     setTasks,
@@ -212,5 +240,12 @@ export default function useTask(router) {
     emptyTrash,
     filteredTasks,
     toggleTheme,
+    showTypeDialog,
+    setShowTypeDialog,
+    selectedTaskType,
+    setSelectedTaskType,
+    handleTypeSelect,
+    handleBackToTypeSelection,
+    handleCloseForm,
   };
 }

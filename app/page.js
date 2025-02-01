@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import TaskDialog from "@/components/TaskDialog";
 import TaskStats from "@/components/TaskStats";
 import TaskHeader from "@/components/TaskHeader";
+import TaskTypeDialog from "@/components/TaskTypeDialog";
 import TaskNavigation from "@/components/TaskNavigation";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { useTheme } from "next-themes";
@@ -40,6 +41,13 @@ export default function HomePage() {
     emptyTrash,
     filteredTasks,
     toggleTheme,
+    showTypeDialog,
+        setShowTypeDialog,
+        selectedTaskType,
+        setSelectedTaskType,
+        handleTypeSelect,
+        handleBackToTypeSelection,
+        handleCloseForm,
   } = useTask(router);
 
   return (
@@ -70,12 +78,12 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
           {/* Left Section */}
           <div className="md:col-span-1 flex items-center">
-            <div className="bg-background dark:bg-background rounded-lg shadow-md p-8 w-full">
+            <div className="bg-background rounded-lg shadow-md p-8 w-full">
               <TaskHeader />
               <TaskStats stats={taskStats} />
               <div className="mt-8">
                 <button
-                  onClick={() => setShowForm(true)}
+                  onClick={() => setShowTypeDialog(true)}
                   className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
                 >
                   <Plus size={20} />
@@ -124,8 +132,19 @@ export default function HomePage() {
         </div>
       </main>
 
-      <TaskDialog isOpen={showForm} onClose={() => setShowForm(false)}>
-        <TaskForm onSubmit={addTask} onClose={() => setShowForm(false)} />
+      <TaskTypeDialog
+        isOpen={showTypeDialog}
+        onClose={() => setShowTypeDialog(false)}
+        onSelectType={handleTypeSelect}
+      />
+
+      <TaskDialog isOpen={showForm}>
+        <TaskForm
+          onSubmit={addTask}
+          onClose={handleCloseForm}
+          onBack={handleBackToTypeSelection}
+          initialTaskType={selectedTaskType}
+        />
       </TaskDialog>
 
       <ConfirmDialog

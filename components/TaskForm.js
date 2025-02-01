@@ -1,9 +1,16 @@
-"use client";
-
 import { useState } from "react";
+import { X, ArrowLeft } from "lucide-react";
 
-export default function TaskForm({ onSubmit, onClose, initialData }) {
-  const [taskType, setTaskType] = useState(initialData?.type || "text");
+export default function TaskForm({
+  onSubmit,
+  onClose,
+  initialData,
+  onBack,
+  initialTaskType,
+}) {
+  const [taskType, setTaskType] = useState(
+    initialTaskType || initialData?.type || "text"
+  );
   const [text, setText] = useState(initialData?.text || "");
   const [description, setDescription] = useState(
     initialData?.description || ""
@@ -11,7 +18,6 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
   const [dueDate, setDueDate] = useState(initialData?.dueDate || "");
   const [category, setCategory] = useState(initialData?.category || "Work");
   const categories = ["Work", "Personal", "Errands", "Shopping", "Other"];
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,43 +46,30 @@ export default function TaskForm({ onSubmit, onClose, initialData }) {
   return (
     <div className="bg-background rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-foreground">
-          {initialData ? "Edit Task" : "Create New Task"}
-        </h2>
+        <div className="flex items-center gap-4">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+          <h2 className="text-xl font-semibold text-foreground">
+            {initialData ? "Edit Task" : "Create New Task"}
+          </h2>
+        </div>
         {onClose && (
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground"
-          ></button>
+          >
+            <X size={20} />
+          </button>
         )}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="taskType"
-              value="checklist"
-              checked={taskType === "checklist"}
-              onChange={(e) => setTaskType(e.target.value)}
-              className="text-primary"
-            />
-            Checklist
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="taskType"
-              value="text"
-              checked={taskType === "text"}
-              onChange={(e) => setTaskType(e.target.value)}
-              className="text-primary"
-            />
-            Text
-          </label>
-        </div>
-
         <div>
           <label className="block text-sm font-medium text-muted-foreground mb-1">
             Title
