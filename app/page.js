@@ -84,10 +84,13 @@ export default function HomePage() {
               <div className="mt-8">
                 <button
                   onClick={() => setShowTypeDialog(true)}
-                  className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                  className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_8px_15px_rgba(0,0,0,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:brightness-90 hover:scale-105 active:scale-95"
                 >
-                  <Plus size={20} />
-                  Create Task
+                  <Plus
+                    size={20}
+                    className="transition-transform duration-300 hover:rotate-90"
+                  />
+                  <span className="font-semibold">Create Task</span>
                 </button>
               </div>
             </div>

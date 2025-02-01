@@ -46,7 +46,7 @@ export default function TaskForm({
   return (
     <div className="bg-background rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-8">
           {onBack && (
             <button
               onClick={onBack}
