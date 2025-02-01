@@ -42,12 +42,12 @@ export default function HomePage() {
     filteredTasks,
     toggleTheme,
     showTypeDialog,
-        setShowTypeDialog,
-        selectedTaskType,
-        setSelectedTaskType,
-        handleTypeSelect,
-        handleBackToTypeSelection,
-        handleCloseForm,
+    setShowTypeDialog,
+    selectedTaskType,
+    setSelectedTaskType,
+    handleTypeSelect,
+    handleBackToTypeSelection,
+    handleCloseForm,
   } = useTask(router);
 
   return (
