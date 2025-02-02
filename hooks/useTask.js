@@ -151,16 +151,14 @@ export default function useTask(router) {
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
         if (task.id === taskId) {
-          // Untuk checklist, kita simpan subtasks ke description
           if (task.type === "checklist") {
             return {
               ...task,
               text: updatedTask.text,
-              description: updatedTask.description, // Ini akan berisi subtasks dalam format bullet points
+              description: updatedTask.description, 
               type: "checklist",
             };
           }
-          // Untuk task biasa
           return {
             ...task,
             ...updatedTask,
