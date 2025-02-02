@@ -1,3 +1,4 @@
+// TaskList.js
 "use client";
 
 import { useState } from "react";
@@ -55,7 +56,7 @@ export default function TaskList({
           key={task.id}
           className={`bg-background text-foreground border rounded-lg p-4 hover:shadow-md transition-shadow ${
             task.completed
-              ? "border-green-200 bg-green-50 dark:bg-green-900"
+              ? "border-green-200 bg-green-50 dark:bg-green-900/20"
               : "border-gray-200"
           }`}
         >
@@ -95,7 +96,7 @@ export default function TaskList({
                   <>
                     <button
                       onClick={() => onRestore(task.id)}
-                      className="p-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 "
+                      className="p-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500"
                       title="Restore task"
                     >
                       <RotateCcw size={16} />
@@ -132,7 +133,7 @@ export default function TaskList({
             {task.type === "text" && (
               <div className="space-y-2">
                 {task.description && (
-                  <div className="text-muted-foreground text-sm bg-muted p-3 rounded-md border border-border">
+                  <div className="text-muted-foreground text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line">
                     {task.description}
                   </div>
                 )}
@@ -143,10 +144,18 @@ export default function TaskList({
                     <span>Due: {formatDate(task.dueDate)}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                {task.category && (
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <Tag size={14} />
                     <span>{task.category}</span>
-                </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {task.type === "checklist" && task.description && (
+              <div className="text-muted-foreground text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line">
+                {task.description}
               </div>
             )}
 
@@ -157,7 +166,6 @@ export default function TaskList({
                   : `Deleted at: ${formatDate(task.deletedAt)}`}
               </div>
             )}
-
           </div>
         </div>
       ))}

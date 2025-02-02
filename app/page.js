@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import useTask from "@/hooks/useTask";
 import TaskForm from "@/components/TaskForm";
+import ChecklistForm from "@/components/ChecklistForm";
 import TaskList from "@/components/TaskList";
 import Footer from "@/components/Footer";
 import TaskDialog from "@/components/TaskDialog";
@@ -52,7 +53,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-background dark:bg-background shadow">
+      <header className="bg-background shadow">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-lg sm:text-xl font-bold text-primary">
             Welcome Gilvan
@@ -60,7 +61,7 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full bg-background dark:bg-background hover:bg-gray-200 dark:hover:bg-gray-700 transitions-color"
+              className="p-2 rounded-full bg-background hover:bg-gray-200 dark:hover:bg-gray-700 transitions-color"
             >
               {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </button>
@@ -142,12 +143,20 @@ export default function HomePage() {
       />
 
       <TaskDialog isOpen={showForm}>
-        <TaskForm
-          onSubmit={addTask}
-          onClose={handleCloseForm}
-          onBack={handleBackToTypeSelection}
-          initialTaskType={selectedTaskType}
-        />
+        {selectedTaskType === "text" ? (
+          <TaskForm
+            onSubmit={addTask}
+            onClose={handleCloseForm}
+            onBack={handleBackToTypeSelection}
+            initialTaskType={selectedTaskType}
+          />
+        ) : (
+          <ChecklistForm
+            onSubmit={addTask}
+            onClose={handleCloseForm}
+            onBack={handleBackToTypeSelection}
+          />
+        )}
       </TaskDialog>
 
       <ConfirmDialog

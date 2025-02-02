@@ -97,7 +97,13 @@ export default function useTask(router) {
   }, [tasks]);
 
   const addTask = (task) => {
-    setTasks([task, ...tasks]);
+    // Jika task adalah array (multiple tasks), tambahkan semuanya
+    if (Array.isArray(task)) {
+      setTasks((prevTasks) => [...task, ...prevTasks]);
+    } else {
+      // Jika single task, tambahkan seperti biasa
+      setTasks((prevTasks) => [task, ...prevTasks]);
+    }
     setShowForm(false);
     toast({
       title: "Success",
@@ -142,10 +148,28 @@ export default function useTask(router) {
   };
 
   const updateTask = (taskId, updatedTask) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, ...updatedTask } : task
-      )
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id === taskId) {
+          // Untuk checklist, kita simpan subtasks ke description
+          if (task.type === "checklist") {
+            return {
+              ...task,
+              text: updatedTask.text,
+              description: updatedTask.description, // Ini akan berisi subtasks dalam format bullet points
+              type: "checklist",
+            };
+          }
+          // Untuk task biasa
+          return {
+            ...task,
+            ...updatedTask,
+            description: updatedTask.description || task.description,
+            type: updatedTask.type || task.type,
+          };
+        }
+        return task;
+      })
     );
     toast({
       title: "Success",
@@ -216,6 +240,27 @@ export default function useTask(router) {
     setSelectedTaskType(null);
   };
 
+  const toggleChecklistItem = (taskId, itemId) => {
+  setTasks((prevTasks) =>
+    prevTasks.map((task) => {
+      if (task.id === taskId && task.type === "checklist") {
+        const updatedItems = task.checklistItems.map((item) =>
+          item.id === itemId ? { ...item, completed: !item.completed } : item
+        );
+        
+        const allCompleted = updatedItems.every((item) => item.completed);
+        
+        return {
+          ...task,
+          checklistItems: updatedItems,
+          completed: allCompleted,
+        };
+      }
+      return task;
+    })
+  );
+};
+
   return {
     tasks,
     setTasks,
@@ -247,5 +292,6 @@ export default function useTask(router) {
     handleTypeSelect,
     handleBackToTypeSelection,
     handleCloseForm,
+    toggleChecklistItem,
   };
 }

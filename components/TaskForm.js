@@ -28,11 +28,11 @@ export default function TaskForm({
       id: initialData?.id || Date.now().toString(),
       type: taskType,
       text: text.trim(),
-      description: taskType === "text" ? description.trim() : "",
+      description: description.trim(),
       dueDate: taskType === "text" ? dueDate : null,
+      category: taskType === "text" ? category : null,
       completed: initialData?.completed || false,
       createdAt: initialData?.createdAt || new Date().toISOString(),
-      category: category,
     };
 
     onSubmit(task);
@@ -55,7 +55,7 @@ export default function TaskForm({
               <ArrowLeft size={20} />
             </button>
           )}
-          <h2 className="text-xl font-semibold text-foreground">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground">
             {initialData ? "Edit Task" : "Create New Task"}
           </h2>
         </div>
