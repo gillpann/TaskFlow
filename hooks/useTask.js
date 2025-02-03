@@ -97,11 +97,11 @@ export default function useTask(router) {
   }, [tasks]);
 
   const addTask = (task) => {
-    // Jika task adalah array (multiple tasks), tambahkan semuanya
+    
     if (Array.isArray(task)) {
       setTasks((prevTasks) => [...task, ...prevTasks]);
     } else {
-      // Jika single task, tambahkan seperti biasa
+      
       setTasks((prevTasks) => [task, ...prevTasks]);
     }
     setShowForm(false);
