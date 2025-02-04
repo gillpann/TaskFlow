@@ -1,9 +1,9 @@
-// TaskList.js
 "use client";
 
 import { useState } from "react";
 import { Check, Clock, Pencil, Trash2, RotateCcw, Tag } from "lucide-react";
 import TaskForm from "./TaskForm";
+import ChecklistForm from "./ChecklistForm"
 
 export default function TaskList({
   tasks,
@@ -35,18 +35,29 @@ export default function TaskList({
   }
 
   return (
-    <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
+    <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 pb-4 custom-scrollbar">
       {editingTask && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center p-4 z-50">
           <div className="bg-background text-foreground rounded-lg w-full max-w-md">
-            <TaskForm
-              initialData={editingTask}
-              onSubmit={(updatedTask) => {
-                onUpdate(editingTask.id, updatedTask);
-                setEditingTask(null);
-              }}
-              onClose={() => setEditingTask(null)}
-            />
+            {editingTask.type === "checklist" ? (
+              <ChecklistForm
+                initialData={editingTask}
+                onSubmit={(updatedTask) => {
+                  onUpdate(editingTask.id, updatedTask);
+                  setEditingTask(null);
+                }}
+                onClose={() => setEditingTask(null)}
+              />
+            ) : (
+              <TaskForm
+                initialData={editingTask}
+                onSubmit={(updatedTask) => {
+                  onUpdate(editingTask.id, updatedTask);
+                  setEditingTask(null);
+                }}
+                onClose={() => setEditingTask(null)}
+              />
+            )}
           </div>
         </div>
       )}
@@ -133,7 +144,13 @@ export default function TaskList({
             {task.type === "text" && (
               <div className="space-y-2">
                 {task.description && (
-                  <div className="text-muted-foreground text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line">
+                  <div
+                    className={`text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line transition-colors ${
+                      task.completed
+                        ? "text-green-800 dark:text-green-300 line-through bg-green-50 dark:bg-green-900/20"
+                        : "text-muted-foreground"
+                    }`}
+                  >
                     {task.description}
                   </div>
                 )}
@@ -154,7 +171,13 @@ export default function TaskList({
             )}
 
             {task.type === "checklist" && task.description && (
-              <div className="text-muted-foreground text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line">
+              <div
+                className={`text-sm bg-muted p-3 rounded-md border border-border whitespace-pre-line transition-colors ${
+                  task.completed
+                    ? "text-green-800 dark:text-green-300 line-through bg-green-50 dark:bg-green-900/20"
+                    : "text-muted-foreground"
+                }`}
+              >
                 {task.description}
               </div>
             )}
