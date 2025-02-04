@@ -16,6 +16,19 @@ export default function TaskList({
 }) {
   const [editingTask, setEditingTask] = useState(null);
 
+  const taskTypeLabels = {
+  checklist: {
+    label: "Checklist",
+    style:
+      "bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary-foreground",
+  },
+  text: {
+    label: "Text",
+    style:
+      "bg-secondary/20 text-secondary dark:bg-secondary/30 dark:text-secondary-foreground",
+  },
+};
+
   const formatDate = (date) => {
     return new Date(date).toLocaleString("en-US", {
       year: "numeric",
@@ -72,6 +85,13 @@ export default function TaskList({
           }`}
         >
           <div className="space-y-3">
+            <div
+              className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
+                taskTypeLabels[task.type]?.style || "bg-gray-100 text-gray-700"
+              }`}
+            >
+              {taskTypeLabels[task.type]?.label || "Unknown"}
+            </div>
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-2">
                 {!isTrash && (
