@@ -1,4 +1,3 @@
-// app/auth/register/page.js
 "use client";
 import WelcomeSection from "@/components/auth/WelcomeSection";
 import RegisterForm from "@/components/auth/RegisterForm";
