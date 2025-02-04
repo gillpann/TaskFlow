@@ -1,27 +1,32 @@
+import React from "react";
+import { Sparkles, Users, Clock } from "lucide-react";
+
 export default function WelcomeSection({ title, description, features }) {
     return (
-        <div className="hidden lg:flex lg:w-1/2 bg-blue-600 p-12 flex-col justify-center">
-        <h1 className="text-4xl font-bold text-white mb-6">{title}</h1>
-        <p className="text-white text-lg mb-8">{description}</p>
-        <div className="space-y-4 text-white">
+        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-indigo-600 to-blue-700 p-12 flex-col justify-center relative overflow-hidden">
+        {/* Decorative circles */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
+
+        <div className="relative z-10">
+            <h1 className="text-5xl font-bold text-white mb-6">{title}</h1>
+            <p className="text-white/90 text-xl mb-12 leading-relaxed">
+            {description}
+            </p>
+
+            <div className="space-y-6">
             {features.map((feature, index) => (
-            <div key={index} className="flex items-center">
-                <svg
-                className="w-6 h-6 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                <div
+                key={index}
+                className="flex items-center space-x-4 text-white/90 hover:text-white transition-colors"
                 >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                />
-                </svg>
-                <span>{feature}</span>
-            </div>
+                {index === 0 && <Sparkles className="w-6 h-6 flex-shrink-0" />}
+                {index === 1 && <Users className="w-6 h-6 flex-shrink-0" />}
+                {index === 2 && <Clock className="w-6 h-6 flex-shrink-0" />}
+                <span className="text-lg">{feature}</span>
+                </div>
             ))}
+            </div>
         </div>
         </div>
     );
