@@ -76,9 +76,14 @@ export default function HomePage() {
       </header>
 
       <main className="flex-grow container mx-auto px-4 py-8">
+        {/* Mobile Stats Only */}
+        <div className="block md:hidden mb-6">
+          <TaskStats stats={taskStats} />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
-          {/* Left Section */}
-          <div className="md:col-span-1 flex items-center">
+          {/* Left Section - Sama seperti sebelumnya untuk desktop */}
+          <div className="hidden md:block md:col-span-1">
             <div className="bg-background rounded-lg shadow-md p-8 w-full">
               <TaskHeader />
               <TaskStats stats={taskStats} />
@@ -97,9 +102,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right Section */}
+          {/* Right Section - Task List */}
           <div className="md:col-span-2 flex flex-col">
-            <div className="bg-background rounded-lg shadow-md p-6 flex-grow mb-8">
+            <div className="bg-background rounded-lg shadow-md p-6 flex-grow">
               <TaskNavigation
                 currentView={currentView}
                 setCurrentView={setCurrentView}
@@ -109,31 +114,36 @@ export default function HomePage() {
                 showConfirmDialog={showConfirmDialog}
                 setShowConfirmDialog={setShowConfirmDialog}
               />
-
-              <div className="min-h-[500px]">
-                <TaskList
-                  tasks={filteredTasks}
-                  onToggleComplete={toggleComplete}
-                  onDelete={
-                    currentView === "home" ? deleteTask : permanentlyDeleteTask
-                  }
-                  onUpdate={updateTask}
-                  onRestore={restoreTask}
-                  isTrash={currentView === "trash"}
-                  emptyMessage={
-                    searchQuery
-                      ? `No tasks found${
-                          currentView === "trash" ? " in trash" : ""
-                        }`
-                      : currentView === "trash"
-                      ? "Trash is empty"
-                      : "Your tasks will show up here."
-                  }
-                />
-              </div>
+              <TaskList
+                tasks={filteredTasks}
+                onToggleComplete={toggleComplete}
+                onDelete={
+                  currentView === "home" ? deleteTask : permanentlyDeleteTask
+                }
+                onUpdate={updateTask}
+                onRestore={restoreTask}
+                isTrash={currentView === "trash"}
+                emptyMessage={
+                  searchQuery
+                    ? `No tasks found${
+                        currentView === "trash" ? " in trash" : ""
+                      }`
+                    : currentView === "trash"
+                    ? "Trash is empty"
+                    : "Your tasks will show up here."
+                }
+              />
             </div>
           </div>
         </div>
+
+        {/* Mobile Floating Action Button */}
+        <button
+          className="flex md:hidden fixed right-6 bottom-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg items-center justify-center transition-transform hover:scale-110 active:scale-95"
+          onClick={() => setShowTypeDialog(true)}
+        >
+          <Plus size={24} />
+        </button>
       </main>
 
       <TaskTypeDialog
