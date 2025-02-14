@@ -67,7 +67,7 @@ export default function HomePage() {
             </button>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-secondary dark:hover:bg-muted transition-colors rounded-md"
+              className="px-4 py-2 text-sm text-primary-foreground bg-primary hover:bg-secondary  transition-colors rounded-md"
             >
               Logout
             </button>

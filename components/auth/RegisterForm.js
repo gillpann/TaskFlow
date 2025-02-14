@@ -40,11 +40,11 @@ export default function RegisterForm() {
     };
 
     return (
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <div className="max-w-md w-full space-y-8">
             <div className="text-center">
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">Create your account</h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <h2 className="mt-6 text-3xl font-bold text-foreground">Create your account</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Sign in here
@@ -55,12 +55,12 @@ export default function RegisterForm() {
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
                 <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="username" className="block text-sm font-medium text-foreground">
                     Username
                 </label>
                 <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                    <User className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <input
                     id="username"
@@ -76,12 +76,12 @@ export default function RegisterForm() {
                 </div>
 
                 <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-foreground">
                     Email address
                 </label>
                 <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                    <Mail className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <input
                     id="email"
@@ -97,12 +97,12 @@ export default function RegisterForm() {
                 </div>
 
                 <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="password" className="block text-sm font-medium text-foreground">
                     Password
                 </label>
                 <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
+                    <Lock className="h-5 w-5 text-muted-foregorund" />
                     </div>
                     <input
                     id="password"
@@ -129,12 +129,12 @@ export default function RegisterForm() {
                 </div>
 
                 <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground">
                     Confirm Password
                 </label>
                 <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
+                    <Lock className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <input
                     id="confirmPassword"
@@ -164,7 +164,7 @@ export default function RegisterForm() {
             <div>
                 <button
                 type="submit"
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-lg bg-primary text-primary-foreground hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
                 >
                 Create Account
                 </button>
