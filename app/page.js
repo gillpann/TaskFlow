@@ -19,7 +19,7 @@ import { Sun, Moon } from "lucide-react";
 export default function HomePage() {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  
+
   const {
     tasks,
     trashedTasks,
@@ -49,6 +49,16 @@ export default function HomePage() {
     handleTypeSelect,
     handleBackToTypeSelection,
     handleCloseForm,
+    showCalendar,
+    setShowCalendar,
+    calendarDate,
+    goToPreviousMonth,
+    goToNextMonth,
+    goToCurrentMonth,
+    getTasksForMonth,
+    getMonthName,
+    generateCalendarDays,
+    handleSearch,
   } = useTask(router);
 
   return (
@@ -82,7 +92,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
-          {/* Left Section - Sama seperti sebelumnya untuk desktop */}
+          {/* Left Section */}
           <div className="hidden md:block md:col-span-1">
             <div className="bg-background rounded-lg shadow-md p-8 w-full">
               <TaskHeader />
@@ -113,6 +123,16 @@ export default function HomePage() {
                 setSearchQuery={setSearchQuery}
                 showConfirmDialog={showConfirmDialog}
                 setShowConfirmDialog={setShowConfirmDialog}
+                showCalendar={showCalendar}
+                setShowCalendar={setShowCalendar}
+                handleSearch={handleSearch}
+                calendarDate={calendarDate}
+                goToPreviousMonth={goToPreviousMonth}
+                goToNextMonth={goToNextMonth}
+                goToCurrentMonth={goToCurrentMonth}
+                getMonthName={getMonthName}
+                generateCalendarDays={generateCalendarDays}
+                getTasksForMonth={getTasksForMonth}
               />
               <TaskList
                 tasks={filteredTasks}
